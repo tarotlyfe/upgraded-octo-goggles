@@ -47,9 +47,36 @@ export class UserControllerBase {
   })
   async createUser(@common.Body() data: UserCreateInput): Promise<User> {
     return await this.service.createUser({
-      data: data,
+      data: {
+        ...data,
+
+        chat: data.chat
+          ? {
+              connect: data.chat,
+            }
+          : undefined,
+
+        chats: data.chats
+          ? {
+              connect: data.chats,
+            }
+          : undefined,
+      },
       select: {
         bio: true,
+
+        chat: {
+          select: {
+            id: true,
+          },
+        },
+
+        chats: {
+          select: {
+            id: true,
+          },
+        },
+
         createdAt: true,
         firstName: true,
         id: true,
@@ -79,6 +106,19 @@ export class UserControllerBase {
       ...args,
       select: {
         bio: true,
+
+        chat: {
+          select: {
+            id: true,
+          },
+        },
+
+        chats: {
+          select: {
+            id: true,
+          },
+        },
+
         createdAt: true,
         firstName: true,
         id: true,
@@ -109,6 +149,19 @@ export class UserControllerBase {
       where: params,
       select: {
         bio: true,
+
+        chat: {
+          select: {
+            id: true,
+          },
+        },
+
+        chats: {
+          select: {
+            id: true,
+          },
+        },
+
         createdAt: true,
         firstName: true,
         id: true,
@@ -145,9 +198,36 @@ export class UserControllerBase {
     try {
       return await this.service.updateUser({
         where: params,
-        data: data,
+        data: {
+          ...data,
+
+          chat: data.chat
+            ? {
+                connect: data.chat,
+              }
+            : undefined,
+
+          chats: data.chats
+            ? {
+                connect: data.chats,
+              }
+            : undefined,
+        },
         select: {
           bio: true,
+
+          chat: {
+            select: {
+              id: true,
+            },
+          },
+
+          chats: {
+            select: {
+              id: true,
+            },
+          },
+
           createdAt: true,
           firstName: true,
           id: true,
@@ -186,6 +266,19 @@ export class UserControllerBase {
         where: params,
         select: {
           bio: true,
+
+          chat: {
+            select: {
+              id: true,
+            },
+          },
+
+          chats: {
+            select: {
+              id: true,
+            },
+          },
+
           createdAt: true,
           firstName: true,
           id: true,

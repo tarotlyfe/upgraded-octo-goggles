@@ -9,6 +9,8 @@ generator client {
 
 model User {
   bio       String?
+  chat      Chat?    @relation(name: "chat")
+  chats     Chat?    @relation(name: "chats")
   createdAt DateTime @default(now())
   firstName String?
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
@@ -17,4 +19,14 @@ model User {
   roles     Json
   updatedAt DateTime @updatedAt
   username  String   @unique
+}
+
+model Chat {
+  createdAt DateTime @default(now())
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  initiator User?    @relation(name: "chats", fields: [initiator], references: [id])
+  initiator String?  @unique @db.ObjectId
+  responder User?    @relation(name: "chat", fields: [responder], references: [id])
+  responder String?  @unique @db.ObjectId
+  updatedAt DateTime @updatedAt
 }

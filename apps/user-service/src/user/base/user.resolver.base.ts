@@ -26,6 +26,7 @@ import { UserFindUniqueArgs } from "./UserFindUniqueArgs";
 import { CreateUserArgs } from "./CreateUserArgs";
 import { UpdateUserArgs } from "./UpdateUserArgs";
 import { DeleteUserArgs } from "./DeleteUserArgs";
+import { Chat } from "../../chat/base/Chat";
 import { UserService } from "../user.service";
 @common.UseGuards(GqlDefaultAuthGuard, gqlACGuard.GqlACGuard)
 @graphql.Resolver(() => User)
@@ -86,7 +87,21 @@ export class UserResolverBase {
   async createUser(@graphql.Args() args: CreateUserArgs): Promise<User> {
     return await this.service.createUser({
       ...args,
-      data: args.data,
+      data: {
+        ...args.data,
+
+        chat: args.data.chat
+          ? {
+              connect: args.data.chat,
+            }
+          : undefined,
+
+        chats: args.data.chats
+          ? {
+              connect: args.data.chats,
+            }
+          : undefined,
+      },
     });
   }
 
@@ -101,7 +116,21 @@ export class UserResolverBase {
     try {
       return await this.service.updateUser({
         ...args,
-        data: args.data,
+        data: {
+          ...args.data,
+
+          chat: args.data.chat
+            ? {
+                connect: args.data.chat,
+              }
+            : undefined,
+
+          chats: args.data.chats
+            ? {
+                connect: args.data.chats,
+              }
+            : undefined,
+        },
       });
     } catch (error) {
       if (isRecordNotFoundError(error)) {
@@ -130,5 +159,43 @@ export class UserResolverBase {
       }
       throw error;
     }
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @graphql.ResolveField(() => Chat, {
+    nullable: true,
+    name: "chat",
+  })
+  @nestAccessControl.UseRoles({
+    resource: "Chat",
+    action: "read",
+    possession: "any",
+  })
+  async getChat(@graphql.Parent() parent: User): Promise<Chat | null> {
+    const result = await this.service.getChat(parent.id);
+
+    if (!result) {
+      return null;
+    }
+    return result;
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @graphql.ResolveField(() => Chat, {
+    nullable: true,
+    name: "chats",
+  })
+  @nestAccessControl.UseRoles({
+    resource: "Chat",
+    action: "read",
+    possession: "any",
+  })
+  async getChats(@graphql.Parent() parent: User): Promise<Chat | null> {
+    const result = await this.service.getChats(parent.id);
+
+    if (!result) {
+      return null;
+    }
+    return result;
   }
 }

@@ -17,9 +17,9 @@
     "package:container": "docker build .",
     "compose:up": "docker-compose up -d",
     "compose:down": "docker-compose down --volumes",
+    "format": "prettier --write .",
     "prisma:pull": "prisma db pull",
-    "prisma:push": " prisma db push",
-    "format": "prettier --write ."
+    "prisma:push": " prisma db push"
   },
   "dependencies": {
     "@apollo/server": "^4.9.4",

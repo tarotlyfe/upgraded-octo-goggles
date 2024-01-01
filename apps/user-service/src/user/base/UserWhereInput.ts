@@ -13,7 +13,8 @@ import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
 import { StringNullableFilter } from "../../util/StringNullableFilter";
 import { Type } from "class-transformer";
-import { IsOptional } from "class-validator";
+import { IsOptional, ValidateNested } from "class-validator";
+import { ChatWhereUniqueInput } from "../../chat/base/ChatWhereUniqueInput";
 import { StringFilter } from "../../util/StringFilter";
 
 @InputType()
@@ -28,6 +29,30 @@ class UserWhereInput {
     nullable: true,
   })
   bio?: StringNullableFilter;
+
+  @ApiProperty({
+    required: false,
+    type: () => ChatWhereUniqueInput,
+  })
+  @ValidateNested()
+  @Type(() => ChatWhereUniqueInput)
+  @IsOptional()
+  @Field(() => ChatWhereUniqueInput, {
+    nullable: true,
+  })
+  chat?: ChatWhereUniqueInput;
+
+  @ApiProperty({
+    required: false,
+    type: () => ChatWhereUniqueInput,
+  })
+  @ValidateNested()
+  @Type(() => ChatWhereUniqueInput)
+  @IsOptional()
+  @Field(() => ChatWhereUniqueInput, {
+    nullable: true,
+  })
+  chats?: ChatWhereUniqueInput;
 
   @ApiProperty({
     required: false,
