@@ -16,40 +16,22 @@ import * as errors from "../../errors";
 import { Request } from "express";
 import { plainToClass } from "class-transformer";
 import { ApiNestedQuery } from "../../decorators/api-nested-query.decorator";
-import * as nestAccessControl from "nest-access-control";
-import * as defaultAuthGuard from "../../auth/defaultAuth.guard";
+import { GrpcMethod } from "@nestjs/microservices";
 import { ChatService } from "../chat.service";
-import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
-import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
 import { ChatCreateInput } from "./ChatCreateInput";
-import { Chat } from "./Chat";
-import { ChatFindManyArgs } from "./ChatFindManyArgs";
+import { ChatWhereInput } from "./ChatWhereInput";
 import { ChatWhereUniqueInput } from "./ChatWhereUniqueInput";
+import { ChatFindManyArgs } from "./ChatFindManyArgs";
 import { ChatUpdateInput } from "./ChatUpdateInput";
+import { Chat } from "./Chat";
 
-@swagger.ApiBearerAuth()
-@common.UseGuards(defaultAuthGuard.DefaultAuthGuard, nestAccessControl.ACGuard)
-export class ChatControllerBase {
-  constructor(
-    protected readonly service: ChatService,
-    protected readonly rolesBuilder: nestAccessControl.RolesBuilder
-  ) {}
-  @common.UseInterceptors(AclValidateRequestInterceptor)
+export class ChatGrpcControllerBase {
+  constructor(protected readonly service: ChatService) {}
   @common.Post()
   @swagger.ApiCreatedResponse({ type: Chat })
-  @swagger.ApiBody({
-    type: ChatCreateInput,
-  })
-  @nestAccessControl.UseRoles({
-    resource: "Chat",
-    action: "create",
-    possession: "any",
-  })
-  @swagger.ApiForbiddenResponse({
-    type: errors.ForbiddenException,
-  })
-  async createChat(@common.Body() data: ChatCreateInput): Promise<Chat> {
-    return await this.service.createChat({
+  @GrpcMethod("ChatService", "create")
+  async create(@common.Body() data: ChatCreateInput): Promise<Chat> {
+    return await this.service.create({
       data: {
         ...data,
 
@@ -86,21 +68,13 @@ export class ChatControllerBase {
     });
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get()
   @swagger.ApiOkResponse({ type: [Chat] })
   @ApiNestedQuery(ChatFindManyArgs)
-  @nestAccessControl.UseRoles({
-    resource: "Chat",
-    action: "read",
-    possession: "any",
-  })
-  @swagger.ApiForbiddenResponse({
-    type: errors.ForbiddenException,
-  })
-  async chats(@common.Req() request: Request): Promise<Chat[]> {
+  @GrpcMethod("ChatService", "findMany")
+  async findMany(@common.Req() request: Request): Promise<Chat[]> {
     const args = plainToClass(ChatFindManyArgs, request.query);
-    return this.service.chats({
+    return this.service.findMany({
       ...args,
       select: {
         createdAt: true,
@@ -123,22 +97,14 @@ export class ChatControllerBase {
     });
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get("/:id")
   @swagger.ApiOkResponse({ type: Chat })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
-  @nestAccessControl.UseRoles({
-    resource: "Chat",
-    action: "read",
-    possession: "own",
-  })
-  @swagger.ApiForbiddenResponse({
-    type: errors.ForbiddenException,
-  })
-  async chat(
+  @GrpcMethod("ChatService", "findOne")
+  async findOne(
     @common.Param() params: ChatWhereUniqueInput
   ): Promise<Chat | null> {
-    const result = await this.service.chat({
+    const result = await this.service.findOne({
       where: params,
       select: {
         createdAt: true,
@@ -167,27 +133,16 @@ export class ChatControllerBase {
     return result;
   }
 
-  @common.UseInterceptors(AclValidateRequestInterceptor)
   @common.Patch("/:id")
   @swagger.ApiOkResponse({ type: Chat })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
-  @swagger.ApiBody({
-    type: ChatUpdateInput,
-  })
-  @nestAccessControl.UseRoles({
-    resource: "Chat",
-    action: "update",
-    possession: "any",
-  })
-  @swagger.ApiForbiddenResponse({
-    type: errors.ForbiddenException,
-  })
-  async updateChat(
+  @GrpcMethod("ChatService", "update")
+  async update(
     @common.Param() params: ChatWhereUniqueInput,
     @common.Body() data: ChatUpdateInput
   ): Promise<Chat | null> {
     try {
-      return await this.service.updateChat({
+      return await this.service.update({
         where: params,
         data: {
           ...data,
@@ -236,19 +191,12 @@ export class ChatControllerBase {
   @common.Delete("/:id")
   @swagger.ApiOkResponse({ type: Chat })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
-  @nestAccessControl.UseRoles({
-    resource: "Chat",
-    action: "delete",
-    possession: "any",
-  })
-  @swagger.ApiForbiddenResponse({
-    type: errors.ForbiddenException,
-  })
-  async deleteChat(
+  @GrpcMethod("ChatService", "delete")
+  async delete(
     @common.Param() params: ChatWhereUniqueInput
   ): Promise<Chat | null> {
     try {
-      return await this.service.deleteChat({
+      return await this.service.delete({
         where: params,
         select: {
           createdAt: true,
