@@ -9,11 +9,15 @@ import { UserList } from "./user/UserList";
 import { UserCreate } from "./user/UserCreate";
 import { UserEdit } from "./user/UserEdit";
 import { UserShow } from "./user/UserShow";
-import { ChatList } from "./chat/ChatList";
-import { ChatCreate } from "./chat/ChatCreate";
-import { ChatEdit } from "./chat/ChatEdit";
-import { ChatShow } from "./chat/ChatShow";
-import { httpAuthProvider } from "./auth-provider/ra-auth-http";
+import { ProfileList } from "./profile/ProfileList";
+import { ProfileCreate } from "./profile/ProfileCreate";
+import { ProfileEdit } from "./profile/ProfileEdit";
+import { ProfileShow } from "./profile/ProfileShow";
+import { CategoryList } from "./category/CategoryList";
+import { CategoryCreate } from "./category/CategoryCreate";
+import { CategoryEdit } from "./category/CategoryEdit";
+import { CategoryShow } from "./category/CategoryShow";
+import { jwtAuthProvider } from "./auth-provider/ra-auth-jwt";
 
 const App = (): React.ReactElement => {
   const [dataProvider, setDataProvider] = useState<DataProvider | null>(null);
@@ -34,7 +38,7 @@ const App = (): React.ReactElement => {
       <Admin
         title={"User Service"}
         dataProvider={dataProvider}
-        authProvider={httpAuthProvider}
+        authProvider={jwtAuthProvider}
         theme={theme}
         dashboard={Dashboard}
         loginPage={Login}
@@ -47,11 +51,18 @@ const App = (): React.ReactElement => {
           show={UserShow}
         />
         <Resource
-          name="Chat"
-          list={ChatList}
-          edit={ChatEdit}
-          create={ChatCreate}
-          show={ChatShow}
+          name="Profile"
+          list={ProfileList}
+          edit={ProfileEdit}
+          create={ProfileCreate}
+          show={ProfileShow}
+        />
+        <Resource
+          name="Category"
+          list={CategoryList}
+          edit={CategoryEdit}
+          create={CategoryCreate}
+          show={CategoryShow}
         />
       </Admin>
     </div>

@@ -1,13 +1,11 @@
-import { ChatWhereUniqueInput } from "../chat/ChatWhereUniqueInput";
+import { ProfileWhereUniqueInput } from "../profile/ProfileWhereUniqueInput";
 import { InputJsonValue } from "../../types";
 
 export type UserUpdateInput = {
-  bio?: string | null;
-  chat?: ChatWhereUniqueInput | null;
-  chats?: ChatWhereUniqueInput | null;
   firstName?: string | null;
   lastName?: string | null;
   password?: string;
+  profiles?: ProfileWhereUniqueInput | null;
   roles?: InputJsonValue;
   username?: string;
 };

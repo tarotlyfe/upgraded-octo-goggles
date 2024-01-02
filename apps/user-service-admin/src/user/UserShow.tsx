@@ -3,27 +3,27 @@ import {
   Show,
   SimpleShowLayout,
   ShowProps,
+  DateField,
   TextField,
   ReferenceField,
-  DateField,
 } from "react-admin";
-import { CHAT_TITLE_FIELD } from "../chat/ChatTitle";
+import { PROFILE_TITLE_FIELD } from "../profile/ProfileTitle";
 
 export const UserShow = (props: ShowProps): React.ReactElement => {
   return (
     <Show {...props}>
       <SimpleShowLayout>
-        <TextField label="bio" source="bio" />
-        <ReferenceField label="Chat" source="chat.id" reference="Chat">
-          <TextField source={CHAT_TITLE_FIELD} />
-        </ReferenceField>
-        <ReferenceField label="Chats" source="chat.id" reference="Chat">
-          <TextField source={CHAT_TITLE_FIELD} />
-        </ReferenceField>
         <DateField source="createdAt" label="Created At" />
         <TextField label="First Name" source="firstName" />
         <TextField label="ID" source="id" />
         <TextField label="Last Name" source="lastName" />
+        <ReferenceField
+          label="Profiles"
+          source="profile.id"
+          reference="Profile"
+        >
+          <TextField source={PROFILE_TITLE_FIELD} />
+        </ReferenceField>
         <TextField label="Roles" source="roles" />
         <DateField source="updatedAt" label="Updated At" />
         <TextField label="Username" source="username" />

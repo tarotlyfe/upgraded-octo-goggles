@@ -19,8 +19,9 @@ import { ApiNestedQuery } from "../../decorators/api-nested-query.decorator";
 import * as nestAccessControl from "nest-access-control";
 import * as defaultAuthGuard from "../../auth/defaultAuth.guard";
 import { UserService } from "../user.service";
-import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
+import { Public } from "../../decorators/public.decorator";
 import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
+import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
 import { UserCreateInput } from "./UserCreateInput";
 import { User } from "./User";
 import { UserFindManyArgs } from "./UserFindManyArgs";
@@ -34,16 +35,11 @@ export class UserControllerBase {
     protected readonly service: UserService,
     protected readonly rolesBuilder: nestAccessControl.RolesBuilder
   ) {}
-  @common.UseInterceptors(AclValidateRequestInterceptor)
+  @Public()
   @common.Post()
   @swagger.ApiCreatedResponse({ type: User })
   @swagger.ApiBody({
     type: UserCreateInput,
-  })
-  @nestAccessControl.UseRoles({
-    resource: "User",
-    action: "create",
-    possession: "any",
   })
   @swagger.ApiForbiddenResponse({
     type: errors.ForbiddenException,
@@ -53,37 +49,24 @@ export class UserControllerBase {
       data: {
         ...data,
 
-        chat: data.chat
+        profiles: data.profiles
           ? {
-              connect: data.chat,
-            }
-          : undefined,
-
-        chats: data.chats
-          ? {
-              connect: data.chats,
+              connect: data.profiles,
             }
           : undefined,
       },
       select: {
-        bio: true,
-
-        chat: {
-          select: {
-            id: true,
-          },
-        },
-
-        chats: {
-          select: {
-            id: true,
-          },
-        },
-
         createdAt: true,
         firstName: true,
         id: true,
         lastName: true,
+
+        profiles: {
+          select: {
+            id: true,
+          },
+        },
+
         roles: true,
         updatedAt: true,
         username: true,
@@ -108,24 +91,17 @@ export class UserControllerBase {
     return this.service.users({
       ...args,
       select: {
-        bio: true,
-
-        chat: {
-          select: {
-            id: true,
-          },
-        },
-
-        chats: {
-          select: {
-            id: true,
-          },
-        },
-
         createdAt: true,
         firstName: true,
         id: true,
         lastName: true,
+
+        profiles: {
+          select: {
+            id: true,
+          },
+        },
+
         roles: true,
         updatedAt: true,
         username: true,
@@ -151,24 +127,17 @@ export class UserControllerBase {
     const result = await this.service.user({
       where: params,
       select: {
-        bio: true,
-
-        chat: {
-          select: {
-            id: true,
-          },
-        },
-
-        chats: {
-          select: {
-            id: true,
-          },
-        },
-
         createdAt: true,
         firstName: true,
         id: true,
         lastName: true,
+
+        profiles: {
+          select: {
+            id: true,
+          },
+        },
+
         roles: true,
         updatedAt: true,
         username: true,
@@ -207,37 +176,24 @@ export class UserControllerBase {
         data: {
           ...data,
 
-          chat: data.chat
+          profiles: data.profiles
             ? {
-                connect: data.chat,
-              }
-            : undefined,
-
-          chats: data.chats
-            ? {
-                connect: data.chats,
+                connect: data.profiles,
               }
             : undefined,
         },
         select: {
-          bio: true,
-
-          chat: {
-            select: {
-              id: true,
-            },
-          },
-
-          chats: {
-            select: {
-              id: true,
-            },
-          },
-
           createdAt: true,
           firstName: true,
           id: true,
           lastName: true,
+
+          profiles: {
+            select: {
+              id: true,
+            },
+          },
+
           roles: true,
           updatedAt: true,
           username: true,
@@ -271,24 +227,17 @@ export class UserControllerBase {
       return await this.service.deleteUser({
         where: params,
         select: {
-          bio: true,
-
-          chat: {
-            select: {
-              id: true,
-            },
-          },
-
-          chats: {
-            select: {
-              id: true,
-            },
-          },
-
           createdAt: true,
           firstName: true,
           id: true,
           lastName: true,
+
+          profiles: {
+            select: {
+              id: true,
+            },
+          },
+
           roles: true,
           updatedAt: true,
           username: true,
