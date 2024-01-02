@@ -12,7 +12,7 @@ https://docs.amplication.com/how-to/custom-code
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
 import { IsString, IsOptional, ValidateNested } from "class-validator";
-import { ChatWhereUniqueInput } from "../../chat/base/ChatWhereUniqueInput";
+import { ProfileWhereUniqueInput } from "../../profile/base/ProfileWhereUniqueInput";
 import { Type } from "class-transformer";
 import { IsJSONValue } from "../../validators";
 import { GraphQLJSON } from "graphql-type-json";
@@ -20,41 +20,6 @@ import { InputJsonValue } from "../../types";
 
 @InputType()
 class UserCreateInput {
-  @ApiProperty({
-    required: false,
-    type: String,
-  })
-  @IsString()
-  @IsOptional()
-  @Field(() => String, {
-    nullable: true,
-  })
-  bio?: string | null;
-
-  @ApiProperty({
-    required: false,
-    type: () => ChatWhereUniqueInput,
-  })
-  @ValidateNested()
-  @Type(() => ChatWhereUniqueInput)
-  @IsOptional()
-  @Field(() => ChatWhereUniqueInput, {
-    nullable: true,
-  })
-  chat?: ChatWhereUniqueInput | null;
-
-  @ApiProperty({
-    required: false,
-    type: () => ChatWhereUniqueInput,
-  })
-  @ValidateNested()
-  @Type(() => ChatWhereUniqueInput)
-  @IsOptional()
-  @Field(() => ChatWhereUniqueInput, {
-    nullable: true,
-  })
-  chats?: ChatWhereUniqueInput | null;
-
   @ApiProperty({
     required: false,
     type: String,
@@ -84,6 +49,18 @@ class UserCreateInput {
   @IsString()
   @Field(() => String)
   password!: string;
+
+  @ApiProperty({
+    required: false,
+    type: () => ProfileWhereUniqueInput,
+  })
+  @ValidateNested()
+  @Type(() => ProfileWhereUniqueInput)
+  @IsOptional()
+  @Field(() => ProfileWhereUniqueInput, {
+    nullable: true,
+  })
+  profiles?: ProfileWhereUniqueInput | null;
 
   @ApiProperty({
     required: true,

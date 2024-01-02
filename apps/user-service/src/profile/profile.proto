@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+                 package profile;
+service ProfileService {
+ rpc create (ProfileCreateInput) returns (Profile) {}
+rpc findMany (findManyParams) returns (stream Profile) {}
+rpc findOne (ProfileWhereUniqueInput) returns (Profile) {}
+rpc update (ProfileUpdateInput) returns (Profile) {}
+rpc delete (ProfileWhereUniqueInput) returns (Profile) {} 
+ }
+message ProfileCreateInput {
+string createdAt = 1;
+string id = 2;
+string updatedAt = 3;
+};
+message Profile {
+string createdAt = 1;
+string id = 2;
+string updatedAt = 3;
+};
+message ProfileWhereUniqueInput {
+string createdAt = 1;
+string id = 2;
+string updatedAt = 3;
+};
+message ProfileUpdateInput {
+string createdAt = 1;
+string id = 2;
+string updatedAt = 3;
+};
+message findManyParams {
+
+};

@@ -9,56 +9,48 @@ rpc update (UserUpdateInput) returns (User) {}
 rpc delete (UserWhereUniqueInput) returns (User) {} 
  }
 message UserCreateInput {
-string bio = 1;
-Chat chat = 2;
-Chat chats = 3;
-string createdAt = 4;
-string firstName = 5;
-string id = 6;
-string lastName = 7;
-string password = 8;
-repeated string roles = 9;
-string updatedAt = 10;
-string username = 11;
+string createdAt = 1;
+string firstName = 2;
+string id = 3;
+string lastName = 4;
+string password = 5;
+Profile profiles = 6;
+repeated string roles = 7;
+string updatedAt = 8;
+string username = 9;
 };
 message User {
-string bio = 1;
-Chat chat = 2;
-Chat chats = 3;
-string createdAt = 4;
-string firstName = 5;
-string id = 6;
-string lastName = 7;
-string password = 8;
-repeated string roles = 9;
-string updatedAt = 10;
-string username = 11;
+string createdAt = 1;
+string firstName = 2;
+string id = 3;
+string lastName = 4;
+string password = 5;
+Profile profiles = 6;
+repeated string roles = 7;
+string updatedAt = 8;
+string username = 9;
 };
 message UserWhereUniqueInput {
-string bio = 1;
-Chat chat = 2;
-Chat chats = 3;
-string createdAt = 4;
-string firstName = 5;
-string id = 6;
-string lastName = 7;
-string password = 8;
-repeated string roles = 9;
-string updatedAt = 10;
-string username = 11;
+string createdAt = 1;
+string firstName = 2;
+string id = 3;
+string lastName = 4;
+string password = 5;
+Profile profiles = 6;
+repeated string roles = 7;
+string updatedAt = 8;
+string username = 9;
 };
 message UserUpdateInput {
-string bio = 1;
-Chat chat = 2;
-Chat chats = 3;
-string createdAt = 4;
-string firstName = 5;
-string id = 6;
-string lastName = 7;
-string password = 8;
-repeated string roles = 9;
-string updatedAt = 10;
-string username = 11;
+string createdAt = 1;
+string firstName = 2;
+string id = 3;
+string lastName = 4;
+string password = 5;
+Profile profiles = 6;
+repeated string roles = 7;
+string updatedAt = 8;
+string username = 9;
 };
 message findManyParams {
 
