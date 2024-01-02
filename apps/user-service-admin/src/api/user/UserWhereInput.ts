@@ -1,13 +1,11 @@
 import { StringNullableFilter } from "../../util/StringNullableFilter";
-import { ChatWhereUniqueInput } from "../chat/ChatWhereUniqueInput";
 import { StringFilter } from "../../util/StringFilter";
+import { ProfileWhereUniqueInput } from "../profile/ProfileWhereUniqueInput";
 
 export type UserWhereInput = {
-  bio?: StringNullableFilter;
-  chat?: ChatWhereUniqueInput;
-  chats?: ChatWhereUniqueInput;
   firstName?: StringNullableFilter;
   id?: StringFilter;
   lastName?: StringNullableFilter;
+  profiles?: ProfileWhereUniqueInput;
   username?: StringFilter;
 };

@@ -14,46 +14,11 @@ import { ApiProperty } from "@nestjs/swagger";
 import { StringNullableFilter } from "../../util/StringNullableFilter";
 import { Type } from "class-transformer";
 import { IsOptional, ValidateNested } from "class-validator";
-import { ChatWhereUniqueInput } from "../../chat/base/ChatWhereUniqueInput";
 import { StringFilter } from "../../util/StringFilter";
+import { ProfileWhereUniqueInput } from "../../profile/base/ProfileWhereUniqueInput";
 
 @InputType()
 class UserWhereInput {
-  @ApiProperty({
-    required: false,
-    type: StringNullableFilter,
-  })
-  @Type(() => StringNullableFilter)
-  @IsOptional()
-  @Field(() => StringNullableFilter, {
-    nullable: true,
-  })
-  bio?: StringNullableFilter;
-
-  @ApiProperty({
-    required: false,
-    type: () => ChatWhereUniqueInput,
-  })
-  @ValidateNested()
-  @Type(() => ChatWhereUniqueInput)
-  @IsOptional()
-  @Field(() => ChatWhereUniqueInput, {
-    nullable: true,
-  })
-  chat?: ChatWhereUniqueInput;
-
-  @ApiProperty({
-    required: false,
-    type: () => ChatWhereUniqueInput,
-  })
-  @ValidateNested()
-  @Type(() => ChatWhereUniqueInput)
-  @IsOptional()
-  @Field(() => ChatWhereUniqueInput, {
-    nullable: true,
-  })
-  chats?: ChatWhereUniqueInput;
-
   @ApiProperty({
     required: false,
     type: StringNullableFilter,
@@ -86,6 +51,18 @@ class UserWhereInput {
     nullable: true,
   })
   lastName?: StringNullableFilter;
+
+  @ApiProperty({
+    required: false,
+    type: () => ProfileWhereUniqueInput,
+  })
+  @ValidateNested()
+  @Type(() => ProfileWhereUniqueInput)
+  @IsOptional()
+  @Field(() => ProfileWhereUniqueInput, {
+    nullable: true,
+  })
+  profiles?: ProfileWhereUniqueInput;
 
   @ApiProperty({
     required: false,

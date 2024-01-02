@@ -14,31 +14,7 @@
   {
     "role": "user",
     "resource": "User",
-    "action": "create:any",
-    "attributes": "*"
-  },
-  {
-    "role": "admin",
-    "resource": "User",
-    "action": "create:any",
-    "attributes": "*"
-  },
-  {
-    "role": "user",
-    "resource": "User",
     "action": "update:any",
-    "attributes": "*"
-  },
-  {
-    "role": "admin",
-    "resource": "User",
-    "action": "update:any",
-    "attributes": "*"
-  },
-  {
-    "role": "user",
-    "resource": "User",
-    "action": "delete:any",
     "attributes": "*"
   },
   {
@@ -61,61 +37,85 @@
   },
   {
     "role": "user",
-    "resource": "Chat",
+    "resource": "Profile",
+    "action": "create:any",
+    "attributes": "*"
+  },
+  {
+    "role": "admin",
+    "resource": "Profile",
+    "action": "create:any",
+    "attributes": "*"
+  },
+  {
+    "role": "user",
+    "resource": "Profile",
+    "action": "update:any",
+    "attributes": "*"
+  },
+  {
+    "role": "admin",
+    "resource": "Profile",
+    "action": "delete:any",
+    "attributes": "*"
+  },
+  {
+    "role": "user",
+    "resource": "Category",
     "action": "read:own",
     "attributes": "*"
   },
   {
     "role": "admin",
-    "resource": "Chat",
+    "resource": "Category",
     "action": "read:own",
     "attributes": "*"
   },
   {
     "role": "user",
-    "resource": "Chat",
+    "resource": "Category",
     "action": "create:any",
     "attributes": "*"
   },
   {
     "role": "admin",
-    "resource": "Chat",
+    "resource": "Category",
     "action": "create:any",
     "attributes": "*"
   },
   {
     "role": "user",
-    "resource": "Chat",
+    "resource": "Category",
     "action": "update:any",
     "attributes": "*"
   },
   {
     "role": "admin",
-    "resource": "Chat",
+    "resource": "Category",
     "action": "update:any",
     "attributes": "*"
   },
   {
     "role": "user",
-    "resource": "Chat",
+    "resource": "Category",
     "action": "delete:any",
     "attributes": "*"
   },
   {
     "role": "admin",
-    "resource": "Chat",
+    "resource": "Category",
     "action": "delete:any",
     "attributes": "*"
   },
   {
     "role": "user",
-    "resource": "Chat",
+    "resource": "Category",
     "action": "read:any",
     "attributes": "*"
   },
   {
     "role": "admin",
-    "resource": "Chat",
+    "resource": "Category",
     "action": "read:any",
     "attributes": "*"
   }

@@ -18,6 +18,7 @@ import * as gqlACGuard from "../../auth/gqlAC.guard";
 import { GqlDefaultAuthGuard } from "../../auth/gqlDefaultAuth.guard";
 import * as common from "@nestjs/common";
 import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
+import { Public } from "../../decorators/public.decorator";
 import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
 import { User } from "./User";
 import { UserCountArgs } from "./UserCountArgs";
@@ -26,7 +27,7 @@ import { UserFindUniqueArgs } from "./UserFindUniqueArgs";
 import { CreateUserArgs } from "./CreateUserArgs";
 import { UpdateUserArgs } from "./UpdateUserArgs";
 import { DeleteUserArgs } from "./DeleteUserArgs";
-import { Chat } from "../../chat/base/Chat";
+import { Profile } from "../../profile/base/Profile";
 import { UserService } from "../user.service";
 @common.UseGuards(GqlDefaultAuthGuard, gqlACGuard.GqlACGuard)
 @graphql.Resolver(() => User)
@@ -77,28 +78,17 @@ export class UserResolverBase {
     return result;
   }
 
-  @common.UseInterceptors(AclValidateRequestInterceptor)
+  @Public()
   @graphql.Mutation(() => User)
-  @nestAccessControl.UseRoles({
-    resource: "User",
-    action: "create",
-    possession: "any",
-  })
   async createUser(@graphql.Args() args: CreateUserArgs): Promise<User> {
     return await this.service.createUser({
       ...args,
       data: {
         ...args.data,
 
-        chat: args.data.chat
+        profiles: args.data.profiles
           ? {
-              connect: args.data.chat,
-            }
-          : undefined,
-
-        chats: args.data.chats
-          ? {
-              connect: args.data.chats,
+              connect: args.data.profiles,
             }
           : undefined,
       },
@@ -119,15 +109,9 @@ export class UserResolverBase {
         data: {
           ...args.data,
 
-          chat: args.data.chat
+          profiles: args.data.profiles
             ? {
-                connect: args.data.chat,
-              }
-            : undefined,
-
-          chats: args.data.chats
-            ? {
-                connect: args.data.chats,
+                connect: args.data.profiles,
               }
             : undefined,
         },
@@ -161,37 +145,13 @@ export class UserResolverBase {
     }
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
-  @graphql.ResolveField(() => Chat, {
+  @Public()
+  @graphql.ResolveField(() => Profile, {
     nullable: true,
-    name: "chat",
+    name: "profiles",
   })
-  @nestAccessControl.UseRoles({
-    resource: "Chat",
-    action: "read",
-    possession: "any",
-  })
-  async getChat(@graphql.Parent() parent: User): Promise<Chat | null> {
-    const result = await this.service.getChat(parent.id);
-
-    if (!result) {
-      return null;
-    }
-    return result;
-  }
-
-  @common.UseInterceptors(AclFilterResponseInterceptor)
-  @graphql.ResolveField(() => Chat, {
-    nullable: true,
-    name: "chats",
-  })
-  @nestAccessControl.UseRoles({
-    resource: "Chat",
-    action: "read",
-    possession: "any",
-  })
-  async getChats(@graphql.Parent() parent: User): Promise<Chat | null> {
-    const result = await this.service.getChats(parent.id);
+  async getProfiles(@graphql.Parent() parent: User): Promise<Profile | null> {
+    const result = await this.service.getProfiles(parent.id);
 
     if (!result) {
       return null;

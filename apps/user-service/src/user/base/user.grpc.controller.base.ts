@@ -18,6 +18,7 @@ import { plainToClass } from "class-transformer";
 import { ApiNestedQuery } from "../../decorators/api-nested-query.decorator";
 import { GrpcMethod } from "@nestjs/microservices";
 import { UserService } from "../user.service";
+import { Public } from "../../decorators/public.decorator";
 import { UserCreateInput } from "./UserCreateInput";
 import { UserWhereInput } from "./UserWhereInput";
 import { UserWhereUniqueInput } from "./UserWhereUniqueInput";
@@ -27,6 +28,7 @@ import { User } from "./User";
 
 export class UserGrpcControllerBase {
   constructor(protected readonly service: UserService) {}
+  @Public()
   @common.Post()
   @swagger.ApiCreatedResponse({ type: User })
   @GrpcMethod("UserService", "create")
@@ -35,37 +37,24 @@ export class UserGrpcControllerBase {
       data: {
         ...data,
 
-        chat: data.chat
+        profiles: data.profiles
           ? {
-              connect: data.chat,
-            }
-          : undefined,
-
-        chats: data.chats
-          ? {
-              connect: data.chats,
+              connect: data.profiles,
             }
           : undefined,
       },
       select: {
-        bio: true,
-
-        chat: {
-          select: {
-            id: true,
-          },
-        },
-
-        chats: {
-          select: {
-            id: true,
-          },
-        },
-
         createdAt: true,
         firstName: true,
         id: true,
         lastName: true,
+
+        profiles: {
+          select: {
+            id: true,
+          },
+        },
+
         roles: true,
         updatedAt: true,
         username: true,
@@ -82,24 +71,17 @@ export class UserGrpcControllerBase {
     return this.service.findMany({
       ...args,
       select: {
-        bio: true,
-
-        chat: {
-          select: {
-            id: true,
-          },
-        },
-
-        chats: {
-          select: {
-            id: true,
-          },
-        },
-
         createdAt: true,
         firstName: true,
         id: true,
         lastName: true,
+
+        profiles: {
+          select: {
+            id: true,
+          },
+        },
+
         roles: true,
         updatedAt: true,
         username: true,
@@ -117,24 +99,17 @@ export class UserGrpcControllerBase {
     const result = await this.service.findOne({
       where: params,
       select: {
-        bio: true,
-
-        chat: {
-          select: {
-            id: true,
-          },
-        },
-
-        chats: {
-          select: {
-            id: true,
-          },
-        },
-
         createdAt: true,
         firstName: true,
         id: true,
         lastName: true,
+
+        profiles: {
+          select: {
+            id: true,
+          },
+        },
+
         roles: true,
         updatedAt: true,
         username: true,
@@ -162,37 +137,24 @@ export class UserGrpcControllerBase {
         data: {
           ...data,
 
-          chat: data.chat
+          profiles: data.profiles
             ? {
-                connect: data.chat,
-              }
-            : undefined,
-
-          chats: data.chats
-            ? {
-                connect: data.chats,
+                connect: data.profiles,
               }
             : undefined,
         },
         select: {
-          bio: true,
-
-          chat: {
-            select: {
-              id: true,
-            },
-          },
-
-          chats: {
-            select: {
-              id: true,
-            },
-          },
-
           createdAt: true,
           firstName: true,
           id: true,
           lastName: true,
+
+          profiles: {
+            select: {
+              id: true,
+            },
+          },
+
           roles: true,
           updatedAt: true,
           username: true,
@@ -219,24 +181,17 @@ export class UserGrpcControllerBase {
       return await this.service.delete({
         where: params,
         select: {
-          bio: true,
-
-          chat: {
-            select: {
-              id: true,
-            },
-          },
-
-          chats: {
-            select: {
-              id: true,
-            },
-          },
-
           createdAt: true,
           firstName: true,
           id: true,
           lastName: true,
+
+          profiles: {
+            select: {
+              id: true,
+            },
+          },
+
           roles: true,
           updatedAt: true,
           username: true,

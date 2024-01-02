@@ -11,44 +11,15 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { ObjectType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsString, IsOptional, ValidateNested, IsDate } from "class-validator";
-import { Chat } from "../../chat/base/Chat";
+import { IsDate, IsString, IsOptional, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
+import { Profile } from "../../profile/base/Profile";
 import { IsJSONValue } from "../../validators";
 import { GraphQLJSON } from "graphql-type-json";
 import { JsonValue } from "type-fest";
 
 @ObjectType()
 class User {
-  @ApiProperty({
-    required: false,
-    type: String,
-  })
-  @IsString()
-  @IsOptional()
-  @Field(() => String, {
-    nullable: true,
-  })
-  bio!: string | null;
-
-  @ApiProperty({
-    required: false,
-    type: () => Chat,
-  })
-  @ValidateNested()
-  @Type(() => Chat)
-  @IsOptional()
-  chat?: Chat | null;
-
-  @ApiProperty({
-    required: false,
-    type: () => Chat,
-  })
-  @ValidateNested()
-  @Type(() => Chat)
-  @IsOptional()
-  chats?: Chat | null;
-
   @ApiProperty({
     required: true,
   })
@@ -86,6 +57,15 @@ class User {
     nullable: true,
   })
   lastName!: string | null;
+
+  @ApiProperty({
+    required: false,
+    type: () => Profile,
+  })
+  @ValidateNested()
+  @Type(() => Profile)
+  @IsOptional()
+  profiles?: Profile | null;
 
   @ApiProperty({
     required: true,

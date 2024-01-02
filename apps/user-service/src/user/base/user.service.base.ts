@@ -14,7 +14,7 @@ import { PrismaService } from "../../prisma/prisma.service";
 import {
   Prisma,
   User, // @ts-ignore
-  Chat,
+  Profile,
 } from "@prisma/client";
 
 import { PasswordService } from "../../auth/password.service";
@@ -79,19 +79,11 @@ export class UserServiceBase {
     return this.prisma.user.delete(args);
   }
 
-  async getChat(parentId: string): Promise<Chat | null> {
+  async getProfiles(parentId: string): Promise<Profile | null> {
     return this.prisma.user
       .findUnique({
         where: { id: parentId },
       })
-      .chat();
-  }
-
-  async getChats(parentId: string): Promise<Chat | null> {
-    return this.prisma.user
-      .findUnique({
-        where: { id: parentId },
-      })
-      .chats();
+      .profiles();
   }
 }
