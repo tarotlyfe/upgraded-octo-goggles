@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+                 package chat;
+service ChatService {
+ rpc create (ChatCreateInput) returns (Chat) {}
+rpc findMany (findManyParams) returns (stream Chat) {}
+rpc findOne (ChatWhereUniqueInput) returns (Chat) {}
+rpc update (ChatUpdateInput) returns (Chat) {}
+rpc delete (ChatWhereUniqueInput) returns (Chat) {} 
+ }
+message ChatCreateInput {
+string createdAt = 1;
+string id = 2;
+string updatedAt = 3;
+};
+message Chat {
+string createdAt = 1;
+string id = 2;
+string updatedAt = 3;
+};
+message ChatWhereUniqueInput {
+string createdAt = 1;
+string id = 2;
+string updatedAt = 3;
+};
+message ChatUpdateInput {
+string createdAt = 1;
+string id = 2;
+string updatedAt = 3;
+};
+message findManyParams {
+
+};

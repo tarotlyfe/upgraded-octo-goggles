@@ -3,11 +3,12 @@ import { AuthModule } from "../auth/auth.module";
 import { ChatModuleBase } from "./base/chat.module.base";
 import { ChatService } from "./chat.service";
 import { ChatController } from "./chat.controller";
+import { ChatGrpcController } from "./chat.grpc.controller";
 import { ChatResolver } from "./chat.resolver";
 
 @Module({
   imports: [ChatModuleBase, forwardRef(() => AuthModule)],
-  controllers: [ChatController],
+  controllers: [ChatController, ChatGrpcController],
   providers: [ChatService, ChatResolver],
   exports: [ChatService],
 })
