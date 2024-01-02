@@ -16,7 +16,6 @@ export const CategoryList = (props: ListProps): React.ReactElement => {
         <TextField label="Description" source="description" />
         <TextField label="ID" source="id" />
         <TextField label="Image" source="image" />
-        <TextField label="Location" source="location" />
         <TextField label="Name" source="name" />
         <DateField source="updatedAt" label="Updated At" />
       </Datagrid>

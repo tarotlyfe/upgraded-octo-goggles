@@ -32,7 +32,6 @@ model Category {
   description String?
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   image       String?
-  location    String?
   name        String
   updatedAt   DateTime @updatedAt
 }

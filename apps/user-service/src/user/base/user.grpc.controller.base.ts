@@ -62,6 +62,7 @@ export class UserGrpcControllerBase {
     });
   }
 
+  @Public()
   @common.Get()
   @swagger.ApiOkResponse({ type: [User] })
   @ApiNestedQuery(UserFindManyArgs)
@@ -89,6 +90,7 @@ export class UserGrpcControllerBase {
     });
   }
 
+  @Public()
   @common.Get("/:id")
   @swagger.ApiOkResponse({ type: User })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })

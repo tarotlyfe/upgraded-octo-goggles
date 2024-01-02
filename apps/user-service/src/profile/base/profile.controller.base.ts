@@ -21,6 +21,7 @@ import * as defaultAuthGuard from "../../auth/defaultAuth.guard";
 import { ProfileService } from "../profile.service";
 import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
 import { Public } from "../../decorators/public.decorator";
+import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
 import { ProfileCreateInput } from "./ProfileCreateInput";
 import { Profile } from "./Profile";
 import { ProfileFindManyArgs } from "./ProfileFindManyArgs";
@@ -98,10 +99,15 @@ export class ProfileControllerBase {
     });
   }
 
-  @Public()
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get("/:id")
   @swagger.ApiOkResponse({ type: Profile })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
+  @nestAccessControl.UseRoles({
+    resource: "Profile",
+    action: "read",
+    possession: "own",
+  })
   @swagger.ApiForbiddenResponse({
     type: errors.ForbiddenException,
   })

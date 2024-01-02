@@ -18,6 +18,7 @@ import { plainToClass } from "class-transformer";
 import { ApiNestedQuery } from "../../decorators/api-nested-query.decorator";
 import { GrpcMethod } from "@nestjs/microservices";
 import { CategoryService } from "../category.service";
+import { Public } from "../../decorators/public.decorator";
 import { CategoryCreateInput } from "./CategoryCreateInput";
 import { CategoryWhereInput } from "./CategoryWhereInput";
 import { CategoryWhereUniqueInput } from "./CategoryWhereUniqueInput";
@@ -38,13 +39,13 @@ export class CategoryGrpcControllerBase {
         description: true,
         id: true,
         image: true,
-        location: true,
         name: true,
         updatedAt: true,
       },
     });
   }
 
+  @Public()
   @common.Get()
   @swagger.ApiOkResponse({ type: [Category] })
   @ApiNestedQuery(CategoryFindManyArgs)
@@ -58,13 +59,13 @@ export class CategoryGrpcControllerBase {
         description: true,
         id: true,
         image: true,
-        location: true,
         name: true,
         updatedAt: true,
       },
     });
   }
 
+  @Public()
   @common.Get("/:id")
   @swagger.ApiOkResponse({ type: Category })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
@@ -79,7 +80,6 @@ export class CategoryGrpcControllerBase {
         description: true,
         id: true,
         image: true,
-        location: true,
         name: true,
         updatedAt: true,
       },
@@ -109,7 +109,6 @@ export class CategoryGrpcControllerBase {
           description: true,
           id: true,
           image: true,
-          location: true,
           name: true,
           updatedAt: true,
         },
@@ -139,7 +138,6 @@ export class CategoryGrpcControllerBase {
           description: true,
           id: true,
           image: true,
-          location: true,
           name: true,
           updatedAt: true,
         },

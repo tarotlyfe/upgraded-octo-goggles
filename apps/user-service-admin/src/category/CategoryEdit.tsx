@@ -7,7 +7,6 @@ export const CategoryEdit = (props: EditProps): React.ReactElement => {
       <SimpleForm>
         <TextInput label="Description" multiline source="description" />
         <TextInput label="Image" source="image" />
-        <TextInput label="Location" source="location" />
         <TextInput label="Name" source="name" />
       </SimpleForm>
     </Edit>
