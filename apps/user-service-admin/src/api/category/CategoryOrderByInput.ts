@@ -5,7 +5,6 @@ export type CategoryOrderByInput = {
   description?: SortOrder;
   id?: SortOrder;
   image?: SortOrder;
-  location?: SortOrder;
   name?: SortOrder;
   updatedAt?: SortOrder;
 };

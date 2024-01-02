@@ -13,36 +13,32 @@ string createdAt = 1;
 string description = 2;
 string id = 3;
 string image = 4;
-string location = 5;
-string name = 6;
-string updatedAt = 7;
+string name = 5;
+string updatedAt = 6;
 };
 message Category {
 string createdAt = 1;
 string description = 2;
 string id = 3;
 string image = 4;
-string location = 5;
-string name = 6;
-string updatedAt = 7;
+string name = 5;
+string updatedAt = 6;
 };
 message CategoryWhereUniqueInput {
 string createdAt = 1;
 string description = 2;
 string id = 3;
 string image = 4;
-string location = 5;
-string name = 6;
-string updatedAt = 7;
+string name = 5;
+string updatedAt = 6;
 };
 message CategoryUpdateInput {
 string createdAt = 1;
 string description = 2;
 string id = 3;
 string image = 4;
-string location = 5;
-string name = 6;
-string updatedAt = 7;
+string name = 5;
+string updatedAt = 6;
 };
 message findManyParams {
 

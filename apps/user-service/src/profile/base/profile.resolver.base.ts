@@ -18,8 +18,8 @@ import * as gqlACGuard from "../../auth/gqlAC.guard";
 import { GqlDefaultAuthGuard } from "../../auth/gqlDefaultAuth.guard";
 import * as common from "@nestjs/common";
 import { Public } from "../../decorators/public.decorator";
-import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
 import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
+import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
 import { Profile } from "./Profile";
 import { ProfileCountArgs } from "./ProfileCountArgs";
 import { ProfileFindManyArgs } from "./ProfileFindManyArgs";
@@ -56,8 +56,13 @@ export class ProfileResolverBase {
     return this.service.profiles(args);
   }
 
-  @Public()
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.Query(() => Profile, { nullable: true })
+  @nestAccessControl.UseRoles({
+    resource: "Profile",
+    action: "read",
+    possession: "own",
+  })
   async profile(
     @graphql.Args() args: ProfileFindUniqueArgs
   ): Promise<Profile | null> {
@@ -142,15 +147,10 @@ export class ProfileResolverBase {
     }
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @Public()
   @graphql.ResolveField(() => User, {
     nullable: true,
     name: "user",
-  })
-  @nestAccessControl.UseRoles({
-    resource: "User",
-    action: "read",
-    possession: "any",
   })
   async getUser(@graphql.Parent() parent: Profile): Promise<User | null> {
     const result = await this.service.getUser(parent.id);

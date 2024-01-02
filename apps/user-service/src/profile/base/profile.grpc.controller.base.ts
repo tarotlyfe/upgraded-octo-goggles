@@ -77,7 +77,6 @@ export class ProfileGrpcControllerBase {
     });
   }
 
-  @Public()
   @common.Get("/:id")
   @swagger.ApiOkResponse({ type: Profile })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
